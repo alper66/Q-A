@@ -42,12 +42,9 @@ public class AnswerDao extends GenericDaoImpl<Answer,Long> {
             List<Answer> resultList=new ArrayList<>();
             try {
                 session = HibernateUtil.getSessionFactory().openSession();
-                CriteriaBuilder cb = session.getCriteriaBuilder();
-                CriteriaQuery<Answer> criteriaQuery = cb.createQuery(Answer.class);
-                Root<Answer> root = criteriaQuery.from(Answer.class);
-                criteriaQuery.select(root);
+                Query<Answer> query=session.createQuery("FROM Answer a where a.question.id=:questionId",Answer.class);
+                query.setParameter("questionId",id);
 
-                Query<Answer> query = session.createQuery(criteriaQuery);
                 resultList = query.getResultList();
                 return resultList;
             } catch (RuntimeException e) {
@@ -59,5 +56,7 @@ public class AnswerDao extends GenericDaoImpl<Answer,Long> {
             }
 
         }
+
+
 
 }

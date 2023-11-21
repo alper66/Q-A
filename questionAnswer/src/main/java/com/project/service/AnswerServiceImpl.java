@@ -34,4 +34,9 @@ public class AnswerServiceImpl implements IAnswerService {
     public List<Answer> getAll() {
         return answerDao.getAll();
     }
+
+    @Override
+    public List<Answer> getAllByQuesionId(Long id) {
+       return  answerDao.findAllByQuestionId(id);
+    }
 }

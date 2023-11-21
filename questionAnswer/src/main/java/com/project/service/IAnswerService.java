@@ -13,4 +13,5 @@ public interface IAnswerService {
     public void deleteAnswer(Long id);
     public Answer findAnswer(Long id);
     public List<Answer> getAll();
+    public List<Answer> getAllByQuesionId(Long id);
 }
