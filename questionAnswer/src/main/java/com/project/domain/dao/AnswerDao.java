@@ -17,7 +17,7 @@ public class AnswerDao extends GenericDaoImpl<Answer,Long> {
     @Override
     public List<Answer> getAll() {
         Session session = null;
-        List<Answer> resultList=new ArrayList<>();
+        List<Answer> resultList = new ArrayList<>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -29,12 +29,35 @@ public class AnswerDao extends GenericDaoImpl<Answer,Long> {
             resultList = query.getResultList();
             return resultList;
         } catch (RuntimeException e) {
-            throw  e;
+            throw e;
 
         } finally {
             session.close();
 
         }
-
     }
+
+    public List<Answer> findAllByQuestionId(Long id){
+            Session session = null;
+            List<Answer> resultList=new ArrayList<>();
+            try {
+                session = HibernateUtil.getSessionFactory().openSession();
+                CriteriaBuilder cb = session.getCriteriaBuilder();
+                CriteriaQuery<Answer> criteriaQuery = cb.createQuery(Answer.class);
+                Root<Answer> root = criteriaQuery.from(Answer.class);
+                criteriaQuery.select(root);
+
+                Query<Answer> query = session.createQuery(criteriaQuery);
+                resultList = query.getResultList();
+                return resultList;
+            } catch (RuntimeException e) {
+                throw  e;
+
+            } finally {
+                session.close();
+
+            }
+
+        }
+
 }
